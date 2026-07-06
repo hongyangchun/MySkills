@@ -1,103 +1,97 @@
 # 福格习惯教练 Skill
 
-基于 BJ Fogg《福格行为模型 / Tiny Habits》构建的对话式习惯教练。用 B=MAP（行为=动机×能力×提示）和福格的行为设计流程，通过引导式对话帮用户诊断习惯问题、设计新习惯、戒除坏习惯。
-
-## 这是什么
-
-一个纯对话式的习惯教练 skill，覆盖福格方法论的 6 大模式：
-
-- **诊断排错** — "我为什么坚持不下来 X？" → 用 B=MAP 反向排查（提示→能力→动机）
-- **行为设计** — "帮我养成 X" → 完整流程：愿望→行为群→焦点地图→微行为→锚点→庆祝→演练→行为升级→习惯叠加
-- **戒除坏习惯** — "帮我戒掉 X" → 反向 B=MAP + 顶替策略
-- **庆祝设计** — "做完不知道怎么奖励" → Shine 概念 + 庆祝菜单
-- **帮别人改变** — "怎么帮我孩子/伴侣/团队养成…" → 差异化策略
-- **身份认同** — "我好像变成了那种…的人" → 从"我在做"到"我就是"的身份转变引导
+> 基于 BJ Fogg《福格行为模型 / Tiny Habits》构建的对话式习惯教练。
 
 ## 架构
 
 ```
-fogg-habit/
-├── SKILL.md                      ← 主入口：原则 + 模式路由
-└── references/
-    ├── diagnose.md               ← 诊断排错模式
-    ├── design.md                 ← 行为设计模式（含行为升级路径 + 习惯叠加）
-    ├── break-habit.md            ← 戒除坏习惯模式
-    ├── celebrate.md              ← 庆祝设计模式
-    ├── help-others.md            ← 帮别人改变模式
-    └── identity.md               ← 身份认同模式
+fogg-habit (主入口 — 意图识别 + 路由)
+├── fogg-habit-core      (基础：诊断排错 + 行为设计)
+├── fogg-habit-break     (救火：戒除坏习惯)
+└── fogg-habit-grow      (进阶：庆祝 + 帮别人 + 身份认同)
 ```
 
-主入口根据用户意图路由到对应 reference，每个 reference 包含完整的引导流程和话术。诊断和行为设计模式会互相串联——诊断完发现设计问题，自然接到行为设计重做。
+| Skill | 一句话 | 触发场景 |
+|-------|--------|---------|
+| `fogg-habit` | 意图识别与路由分发 | 任何习惯相关需求 |
+| `fogg-habit-core` | B=MAP 诊断 → 微行为设计，个人习惯完整闭环 | 坚持不下来、从头设计新习惯 |
+| `fogg-habit-break` | 反向 B=MAP：拆提示 + 加难度 + 行为顶替 | 想戒掉坏习惯 |
+| `fogg-habit-grow` | 庆祝焊住情绪 → 帮别人 → 身份认同 | 做完想庆祝、帮家人/团队、身份转变 |
+
+## KSME 速查
+
+- **B=MAP**：行为 = 动机(Motivation) × 能力(Ability) × 提示(Prompt)
+- **焦点地图**：在"影响力高 × 你做得到"里挑黄金行为
+- **微行为**：砍到30秒内、几乎不需动机 — "这也太简单了吧"就对了
+- **锚点配方**："在我〔现有习惯〕之后，我会〔微行为〕"
+- **Shine/庆祝**：做完立即制造正面情绪，情绪创造习惯
 
 ## 安装
 
-```bash
-git clone https://github.com/hongyangchun/MySkills.git
-```
+### 方式一：让 Agent 帮忙安装（推荐）
 
-然后告诉你的 AI agent：
+在你的 AI Agent 中说：
 
-> 帮我把 fogg-habit 这个 skill 安装到当前环境。
-
-agent 会根据自己所在的平台把文件放到正确位置。注意 `references/` 目录需要和 `SKILL.md` 一起复制，主入口会引用这些文件。
+> 帮我把 https://github.com/hongyangchun/MySkills 仓库中 fogg-habit/skills/ 下的 4 个目录安装到 skills 目录，创建符号链接。
 
 <details>
-<summary>手动安装（可选）</summary>
+<summary>方式二：手动安装</summary>
 
-- **WorkBuddy / CodeBuddy** → 复制到 `~/.workbuddy/skills/fogg-habit/`（含 references/ 子目录）
-- **Claude Code** → 将 SKILL.md 放到 `.claude/commands/fogg-habit.md`，references/ 放到同目录或项目可访问位置
-- **Cursor** → 放到 `.cursor/rules/`
-- **其他 agent** → 对应的指令文件目录，确保 references/ 路径可被 agent 读取
+```bash
+git clone https://github.com/hongyangchun/MySkills.git
+
+# 以 WorkBuddy 为例
+ln -s /path/to/MySkills/fogg-habit/skills/fogg-habit ~/.workbuddy/skills/fogg-habit
+ln -s /path/to/MySkills/fogg-habit/skills/fogg-habit-core ~/.workbuddy/skills/fogg-habit-core
+ln -s /path/to/MySkills/fogg-habit/skills/fogg-habit-break ~/.workbuddy/skills/fogg-habit-break
+ln -s /path/to/MySkills/fogg-habit/skills/fogg-habit-grow ~/.workbuddy/skills/fogg-habit-grow
+```
 </details>
 
 ## 使用方式
 
-安装后自然表达即可触发：
+直接说出需求即可触发：
 
-| 你说的话 | 会路由到 |
-|----------|----------|
-| "我为什么坚持不下来跑步" | 诊断排错 |
-| "帮我养成早起习惯" | 行为设计 |
-| "帮我戒掉熬夜刷手机" | 戒除坏习惯 |
-| "做完不知道怎么奖励自己" | 庆祝设计 |
-| "怎么帮我孩子养成收拾习惯" | 帮别人改变 |
-| "我好像变成了那种会运动的人" | 身份认同 |
+| 你说的话 | 路由到 |
+|----------|--------|
+| "我为什么坚持不下来跑步" | `fogg-habit-core`（诊断） |
+| "帮我养成早起习惯" | `fogg-habit-core`（设计） |
+| "帮我戒掉熬夜刷手机" | `fogg-habit-break` |
+| "做完了不知道怎么奖励" | `fogg-habit-grow` |
+| "怎么帮我孩子养成收拾习惯" | `fogg-habit-grow` |
+| "我好像变了个人" | `fogg-habit-grow` |
+
+也可直接指定子 skill 名称触发。
 
 ## 核心原则
 
-1. **B=MAP**：行为 = 动机 × 能力 × 提示，三者同一时刻同时出现才发生
-2. **别依赖动机**：动机最不可靠，优先降低难度而不是打鸡血
-3. **从微小起步**：把行为砍到 30 秒内、几乎不需要动机
-4. **情绪创造习惯**：做完立刻制造正面情绪（庆祝），习惯才会扎根
-5. **没有失败，只有数据**：坚持不下来是设计问题，不是意志力问题
+1. **B=MAP**：三者同一时刻同时出现才发生
+2. **别依赖动机**：优先降低难度，不是打鸡血
+3. **从微小起步**：砍到30秒内
+4. **情绪创造习惯**：做完立刻庆祝
+5. **没有失败，只有数据**：设计问题，不是意志力问题
 
 ## 设计特点
 
-- **引导式对话**：一次只问一两个问题，让用户答完再推进
-- **温度优先**：口语化、不自责、不学术腔
-- **多模式串联**：诊断→设计→庆祝形成完整闭环
-- **平台无关**：纯 Markdown，不依赖任何特定工具 API
+- **引导式对话**：一次只问一两个问题
+- **温度优先**：口语化、不自责
+- **多模块串联**：core → break → grow 梯度递进
+- **平台无关**：纯 Markdown，不依赖特定 API
 
-## 与原书的覆盖度
+## 覆盖度
 
-| 概念 | 状态 |
-|------|------|
-| B=MAP 模型 | ✅ 完整 |
-| 能力五要素 | ✅ 完整 |
-| 焦点地图 | ✅ 完整 |
-| 微行为 + 锚点配方 | ✅ 完整 |
-| 庆祝/Shine | ✅ 完整 |
-| 戒除坏习惯（反向 B=MAP） | ✅ 完整 |
-| 帮别人改变 | ✅ 完整 |
-| 行为分级升级路径（Tiny→Small→Big） | ✅ 完整 |
-| 习惯叠加/链式 | ✅ 完整 |
-| 身份认同变化 | ✅ 完整 |
+覆盖 B=MAP、能力五要素、焦点地图、微行为+锚点、庆祝/Shine、戒除坏习惯、帮别人改变、行为升级路径、习惯叠加、身份认同——约 98%。
 
-整体覆盖度约 98%，核心方法论与延伸概念均完整覆盖。
+## 与其他 Skill 的关系
+
+| Skill | 关系 | 说明 |
+|-------|------|------|
+| `youjie-solve` | 衔接 | 有解第七步"拟定行动"可接 fogg-habit-core 做微行为设计 |
+| `systems-thinking` | 互补 | 系统思维诊断环境结构，福格在给定环境下设计行为 |
 
 ## 参考书目
 
-- BJ Fogg, *Tiny Habits: The Small Changes That Change Everything* (Houghton Mifflin Harcourt, 2019)
+- BJ Fogg, *Tiny Habits: The Small Changes That Change Everything* (2019)
 - 中文版：《福格行为模型》，徐尧 译，天津科学技术出版社
 
 ## License
