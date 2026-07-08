@@ -1,0 +1,108 @@
+{
+  "skill": "systems-thinking",
+  "version": "1.0.0",
+  "source_book": "《系统之美：决策者的系统思考》— 德内拉·梅多斯",
+  "role": "router",
+  "routes_to": [
+    "systems-thinking-core",
+    "systems-thinking-archetypes",
+    "systems-thinking-leverage",
+    "systems-thinking-obstacles",
+    "systems-thinking-dance"
+  ],
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "帮我分析一下我们产品的用户增长系统是怎么运作的，为什么新增用户不少但日活一直在掉。",
+      "expected_behavior": "激活 systems-thinking 主入口，路由到 systems-thinking-core。话术类似：”听起来你想理解这个系统是怎么运作的。我们先来画一下它的结构。”",
+      "notes": "明确要求分析系统结构+描述具体系统，属于 core 的典型触发：'分析''怎么运作'。"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "为什么每次技术债清理完，过两个月又堆起来了？这已经是第四次了，我真的想不通。",
+      "expected_behavior": "激活 systems-thinking 主入口，路由到 systems-thinking-archetypes。话术类似：”这听起来像是一个反复出现的模式——很可能符合某个经典系统陷阱。”",
+      "notes": "关键词'每次''第四次''想不通'+挫败感，完美匹配 archetypes 触发信号：'又来了''每次都''为什么改不了'。"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "我们公司定了全员 KPI 考核之后，反而各部门之间推诿更严重了，上有政策下有对策。这是什么系统陷阱？",
+      "expected_behavior": "激活 systems-thinking 主入口，路由到 systems-thinking-archetypes。匹配'规则规避'或'目标错位'基模。",
+      "notes": "关键词'上有政策下有对策'直接出现在 archetypes 路线信号中，属于政策阻力类基模的典型案例。"
+    },
+    {
+      "id": "should-trigger-04",
+      "type": "should_trigger",
+      "prompt": "我已经搞清楚我们团队效率低的原因了，现在想知道该怎么入手改变它，最有效的干预点在哪里？",
+      "expected_behavior": "激活 systems-thinking 主入口，路由到 systems-thinking-leverage。话术类似：”你已经理解了问题，现在想知道该在哪里下手，对吗？我们来看看杠杆点。”",
+      "notes": "用户明确表示'已经搞清楚'+询问'入手改变''干预点'，完美匹配 leverage 触发信号：'怎么改''从哪里入手''杠杆'。"
+    },
+    {
+      "id": "should-trigger-05",
+      "type": "should_trigger",
+      "prompt": "我一直以为多开站会就能提高团队协作，但实际数据完全不支持，协作效率反而下降了。为什么我总是搞错？是不是有什么认知偏差？",
+      "expected_behavior": "激活 systems-thinking 主入口，路由到 systems-thinking-obstacles。话术类似：”你感到意外，这很正常——系统有几种方式专门让人'上当'。”",
+      "notes": "关键词'我一直以为''为什么我搞错''认知偏差'+意外感，完美匹配 obstacles 触发信号：'没想到''直觉不对'。"
+    },
+    {
+      "id": "should-trigger-06",
+      "type": "should_trigger",
+      "prompt": "面对公司这种复杂的组织系统，我根本控制不了那些利益博弈。我该怎么跟它相处，有什么心态上的建议？",
+      "expected_behavior": "激活 systems-thinking 主入口，路由到 systems-thinking-dance。话术类似：”面对一个复杂的系统，第一步不是急着改变它，而是思考你怎么和它相处。”",
+      "notes": "关键词'控制不了''怎么相处''心态'+无力感，完美匹配 dance 触发信号：'控制不了''怎么面对''接受放下'。"
+    },
+    {
+      "id": "should-trigger-quick-concept-01",
+      "type": "should_trigger",
+      "prompt": "什么是增强回路？",
+      "expected_behavior": "激活 systems-thinking 主入口，但不路由到任何子模块。直接回答概念：”增强回路(R)是自我强化的循环——越多导致越多，驱动增长或崩溃。”不进入诊断流程。",
+      "notes": "属于快速概念问答：用户问'XX是什么'，主入口应直接回答概念而非进入诊断流程。验证路由器的概念问答表是否生效。"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "今天天气真好，心情不错，你最近怎么样？",
+      "expected_behavior": "不应激活 systems-thinking 主入口，这是纯闲聊，不涉及任何系统分析需求。",
+      "notes": "纯闲聊/问候，无任何系统思考相关信号词或意图。"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "帮我写一个 Python 脚本，批量处理 CSV 文件并按日期分组统计。",
+      "expected_behavior": "不应激活 systems-thinking 主入口，这是纯技术编程任务，不涉及系统结构或行为模式分析。",
+      "notes": "技术实现类请求，无系统思考触发信号。即使'系统'一词出现，也是指技术系统而非行为系统。"
+    },
+    {
+      "id": "should-not-trigger-03",
+      "type": "should_not_trigger",
+      "prompt": "帮我把这份会议纪要翻译成英文发给海外团队。",
+      "expected_behavior": "不应激活 systems-thinking 主入口，这是纯粹的执行指令，不涉及任何系统分析需求。",
+      "notes": "边界规则：紧急执行类/工具类请求应路由到行动导向的 skill，系统思考需要'先理解再行动'。"
+    },
+    {
+      "id": "should-not-trigger-04",
+      "type": "should_not_trigger",
+      "prompt": "推荐几本好看的小说，最近想看点轻松的。",
+      "expected_behavior": "不应激活 systems-thinking 主入口，这是休闲娱乐类请求，与系统思考完全无关。",
+      "notes": "零系统思考信号，验证路由器不会对日常对话产生误触发。"
+    },
+    {
+      "id": "edge-case-01",
+      "type": "edge_case",
+      "prompt": "我最近带团队总感觉哪里不对劲，但又说不上来到底是什么问题。",
+      "expected_behavior": "意图模糊，主入口应触发澄清三步法：”你想做的是：A) 理解这个系统怎么运作的，还是 B) 找到改变它的方法？”先确认用户想要的方向再路由。",
+      "notes": "用户表达了'不对劲'的直觉但未明确是想分析结构还是找解决方案。应触发意图不明确的澄清流程，而非直接路由。"
+    },
+    {
+      "id": "edge-case-02",
+      "type": "edge_case",
+      "prompt": "我们产品数据一直在掉，试了很多办法都没用，我有点想放弃了。你说我是该坚持还是换个赛道？",
+      "expected_behavior": "边界模糊——前半段描述了系统问题（数据持续下降），符合系统思考触发条件；后半段涉及个人决策（该坚持还是放弃）。主入口应路由到 core/dance 分析系统本身，但对'该不该换赛道'的个人决策应明确边界，不做具体建议。可能需要先澄清：是想理解这个局面，还是已经决定了需要确认？",
+      "notes": "系统分析与个人决策混合的场景。主入口的角色是诊断系统行为，不替代个人决策。应触发澄清话术确认用户真实意图。"
+    }
+  ],
+  "minimum_pass_rate": 0.8
+}

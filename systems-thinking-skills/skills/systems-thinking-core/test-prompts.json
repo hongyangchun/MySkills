@@ -1,0 +1,114 @@
+{
+  "skill": "systems-thinking-core",
+  "version": "1.0.0",
+  "source_book": "《系统之美：决策者的系统思考》— 德内拉·梅多斯",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "帮我分析一下我们公司的招聘流程这个系统是怎么运作的，入职率一直上不去，候选人在终面环节大量流失。",
+      "expected_behavior": "激活 systems-thinking-core，引导用户走5步诊断流程：界定系统→识别存量流量→绘制反馈回路→标注延迟→预测行为模式。",
+      "notes": "明确要求分析系统运作方式+描述反复出现的模式，典型的 core skill 触发场景。"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "画出我们团队需求评审到上线这个流程的因果回路图，我想看看为什么每次迭代都延期。",
+      "expected_behavior": "激活 systems-thinking-core，重点触发可视化（绘制回路图），识别增强回路和调节回路。",
+      "notes": "用户明确要求”画因果回路图”，属于 description 中列出的核心触发词。"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "为什么越想省钱反而花得越多？明明在克制，反而消费更多了。这背后是什么反馈在起作用？",
+      "expected_behavior": "激活 systems-thinking-core，识别'越X越反X'的反直觉模式，帮助用户画出增强/调节回路。",
+      "notes": "关键词”反馈在起作用”+反复出现的反直觉模式，属于语言信号中列出的典型提问。"
+    },
+    {
+      "id": "should-trigger-04",
+      "type": "should_trigger",
+      "prompt": "我们社区每次治理违规内容后情况好一阵，然后很快又反弹，改了多少次流程都一样。帮我分析一下这个存量流量的动态。",
+      "expected_behavior": "激活 systems-thinking-core，识别核心存量（违规内容量/用户合规意识）和流量（产生/清理），画出包含延迟的回路图。",
+      "notes": "明确提到”存量流量”+反复出现的”好一阵又反弹”模式，属于 policy-resistance 前置诊断的典型场景。"
+    },
+    {
+      "id": "should-trigger-05",
+      "type": "should_trigger",
+      "prompt": "我们产品降价促销后销量涨了，但利润反而下降了，而且这已经是第三次了。帮我看看这个系统的行为模式是怎么回事。",
+      "expected_behavior": "激活 systems-thinking-core，识别增强回路（降价→销量↑）和调节回路（降价→利润↓），分析意料之外的结果。",
+      "notes": "明确提到”系统行为模式”+意料之外的结果反复发生，完美匹配 trigger scenario 2。"
+    },
+    {
+      "id": "should-trigger-06",
+      "type": "should_trigger",
+      "prompt": "我们部门加班越来越严重，但项目交付质量反而在下降。这个问题每次季度复盘都讨论但就是解决不了，怎么回事？",
+      "expected_behavior": "激活 systems-thinking-core，诊断”越努力越糟”的反馈结构，识别可能存在的增强回路（加班→疲劳→质量↓→返工→更多加班）。",
+      "notes": "关键词”每次都讨论但解决不了”+反直觉结果，属于 trigger scenario 1（反复出现的问题）和 scenario 3（政策无效）。"
+    },
+    {
+      "id": "should-trigger-quick-01",
+      "type": "should_trigger",
+      "prompt": "快点，快速诊断一下为什么我每天学习时间越来越长但成绩反而下降。",
+      "expected_behavior": "激活 systems-thinking-core 的快速模式：只问一个核心问题→直接输出1-2个回路结构→一句话解释→询问是否需要深入。不触发可视化，不追问5步。",
+      "notes": "触发词”快速诊断”+“快点”，应跳过完整5步流程进入快速模式。"
+    },
+    {
+      "id": "should-trigger-quick-02",
+      "type": "should_trigger",
+      "prompt": "简洁点，一句话告诉我为什么每次想存钱都存不下来。",
+      "expected_behavior": "激活 systems-thinking-core 快速模式，直接输出：”看起来是增强回路在驱动消费，调节回路（预算限制）被延迟削弱了。如需深入我可以走完整五步诊断。”",
+      "notes": "触发词”简洁”+“一句话告诉我”，应进入快速模式。"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我查一下腾讯今天的股价涨了多少，以及过去一个月的走势。",
+      "expected_behavior": "不应激活 systems-thinking-core，应路由到金融数据查询 skill（如 westock-data）。",
+      "notes": "纯数据查询，不涉及系统结构或反馈回路分析。触发边界规则：系统思考关注模式和结构，不是一次性事件或数据查询。"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "SWOT 分析和波特五力模型有什么区别？分别适用于什么场景？",
+      "expected_behavior": "不应激活 systems-thinking-core，这是对静态分析框架的概念问询，不涉及动态系统行为分析。",
+      "notes": "SWOT 在边界中明确列为静态快照工具而非系统思考工具。简单概念对比不需要系统结构分析。"
+    },
+    {
+      "id": "should-not-trigger-03",
+      "type": "should_not_trigger",
+      "prompt": "紧急！帮我把这份报告立刻翻译成英文发给客户，没时间解释了。",
+      "expected_behavior": "不应激活 systems-thinking-core，这是紧急执行指令，不涉及任何系统分析需求。",
+      "notes": "边界规则：紧急执行类请求应路由到行动导向的 skill，系统思考需要”先理解再行动”。"
+    },
+    {
+      "id": "should-not-trigger-04",
+      "type": "should_not_trigger",
+      "prompt": "鱼骨图怎么画？给我一个模板就行。",
+      "expected_behavior": "不应激活 systems-thinking-core，这是对线性因果分析工具的模板请求，与系统思考的非线性回路分析有本质区别。",
+      "notes": "边界中明确区分：鱼骨图是线性因果分析（从结果反向追溯原因），系统思考是非线性回路分析。两者范式不同。"
+    },
+    {
+      "id": "edge-case-01",
+      "type": "edge_case",
+      "prompt": "我觉得我的人生陷入了一个死循环，每次努力想变好都回到原点。我不知道该怎么办了，特别迷茫。",
+      "expected_behavior": "边界模糊——描述了系统循环的模式，但情绪化程度高，可能更适合心理咨询/coaching 类 skill。应由 systems-thinking 主入口判断：如果用户想要的是”画出循环结构”则路由到 core，如果用户想要的是”情绪支持和行动建议”则不激活。",
+      "notes": "包含”死循环”“每次回到原点”等系统行为描述，但也包含强烈的迷茫和无助情绪。需要主入口做上下文判断，而非直接由 core 激活。"
+    },
+    {
+      "id": "edge-case-02",
+      "type": "edge_case",
+      "prompt": "竞争对手每次发布新功能我们就会被抢走用户，我们发新功能他们也会被抢回来，这样拉锯已经两年了。你说我们是该继续这么打还是换个思路？",
+      "expected_behavior": "边界模糊——前半段描述了竞争升级的反复模式（可能适合 systems-thinking-archetypes 中的竞争升级基模），后半段请求行动建议（可能适合 leverage 或直接行动导向）。应由主入口判断先发到 core 做结构诊断还是直接匹配 archetypes。",
+      "notes": "如果用户先问”这是什么模式”→ core；如果用户直接问”是竞争升级基模吗”→ archetypes。这里用户的表述处于中间地带。"
+    },
+    {
+      "id": "edge-case-03",
+      "type": "edge_case",
+      "prompt": "我在想是不是该离职了——团队里有人在拉帮结派，新人待不住，老人也走了好几个，HR 招人速度还跟不上。你帮我理理这个局面。",
+      "expected_behavior": "边界模糊——描述了人才流失的系统动态，但也涉及个人决策（该不该离职）。应激活 core 分析团队系统的存量流量和反馈回路，但涉及个人职业决策的部分不属于系统思考范畴。",
+      "notes": "可以激活 core 分析”团队人才系统”，但对”我该不该离职”应明确边界，不做个人决策建议。"
+    }
+  ],
+  "minimum_pass_rate": 0.8
+}
