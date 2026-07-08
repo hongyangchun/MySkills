@@ -1,0 +1,77 @@
+{
+  "skill": "youjie",
+  "version": "1.0",
+  "generated": "2026-07-08",
+  "tests": [
+    {
+      "id": "t01",
+      "type": "should_call",
+      "prompt": "最近工作上一堆麻烦事，感觉什么事都不顺，有什么方法可以帮我梳理一下吗？",
+      "expected": "路由到 prepare 或 solve 子模块",
+      "rationale": "典型的问题困扰信号，应引导用户进入问题管理流程"
+    },
+    {
+      "id": "t02",
+      "type": "should_call",
+      "prompt": "我听说过 KSME 七步法，能给我讲一下怎么用吗？",
+      "expected": "直接解释 KSME 七步法概要 + 引导选择后续模块",
+      "rationale": "概念学习类意图，主入口直接回答"
+    },
+    {
+      "id": "t03",
+      "type": "should_call",
+      "prompt": "我最近总是莫名其妙地发脾气，控制不住情绪，怎么办？",
+      "expected": "路由到 youjie-prepare",
+      "rationale": "情绪管理类意图"
+    },
+    {
+      "id": "t04",
+      "type": "should_call",
+      "prompt": "我和同事的关系很紧张，每次开会都像在吵架，怎么破？",
+      "expected": "路由到 youjie-solve",
+      "rationale": "明确有具体问题需要系统解决"
+    },
+    {
+      "id": "t05",
+      "type": "should_call",
+      "prompt": "我总觉得自己的思维被局限住了，想换个角度看问题，但不知道怎么切换",
+      "expected": "路由到 youjie-mindset",
+      "rationale": "心智模式/思维转换类意图"
+    },
+    {
+      "id": "t06",
+      "type": "should_not_call",
+      "prompt": "我感觉身体不舒服，头痛发烧，该怎么办？",
+      "expected": "不路由，建议就医",
+      "rationale": "纯生理健康问题不属于问题管理范畴"
+    },
+    {
+      "id": "t07",
+      "type": "should_not_call",
+      "prompt": "帮我写一封辞职信，我不想干了",
+      "expected": "不路由，先询问是否需要 KSME 分析后再决定",
+      "rationale": "直接行动请求而非问题管理意图，但可提供分析视角"
+    },
+    {
+      "id": "t08",
+      "type": "should_not_call",
+      "prompt": "量子纠缠是什么？帮我解释一下",
+      "expected": "不路由，回复不在 KSME 领域范围内",
+      "rationale": "纯知识查询，与问题管理无关"
+    },
+    {
+      "id": "t09",
+      "type": "boundary",
+      "prompt": "我父亲刚刚去世了，我不知道该怎么办……",
+      "expected": "表达同理心，谨慎路由到 prepare（哀伤不是问题），不强行推动七步法",
+      "rationale": "存在性危机，Δ公式可能造成二次伤害，需识别边界"
+    },
+    {
+      "id": "t10",
+      "type": "boundary",
+      "prompt": "我在想人生的意义是什么，总感觉做什么都没意思",
+      "expected": "可能路由到 mindset，但不强行套用七步法解决",
+      "rationale": "存在性问题，KSME 工具化方法可能有局限，需识别并告知边界"
+    }
+  ]
+}
