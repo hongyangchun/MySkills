@@ -1,0 +1,52 @@
+{
+  "skill": "fogg-habit-break",
+  "version": "0.1.0",
+  "source_book": "《福格行为模型》BJ Fogg",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "我每天下班回家第一件事就是瘫沙发上刷抖音，一刷就是两小时，怎么戒？",
+      "expected_behavior": "调用 fogg-habit-break，先拆具体行为+提示+回报→反向B=MAP（移除提示/加大难度/削弱动机）→优先用顶替",
+      "notes": "正面场景：用户描述具体的坏习惯场景，应进入break流程"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "我忍不住吃零食，尤其是看电视的时候，怎么改掉这个毛病？",
+      "expected_behavior": "调用 fogg-habit-break，拆解提示（看电视）→移除提示或加大难度→设计顶替行为",
+      "notes": "正面场景：有明确提示触发点的坏习惯"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "我总是对小孩发脾气，事后又后悔，想改掉这个习惯。",
+      "expected_behavior": "调用 fogg-habit-break，拆解脾气爆发的前因→反向B=MAP→优先找顶替反应",
+      "notes": "正面场景：情绪相关的坏习惯"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我写一个小红书文案",
+      "expected_behavior": "不应调用 fogg-habit-break",
+      "notes": "诱饵：内容创作任务，非坏习惯相关"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "我想养成每天喝8杯水的习惯，有什么方法？",
+      "expected_behavior": "不应调用 fogg-habit-break（应路由到 fogg-habit-core）",
+      "notes": "诱饵：养成新习惯场景，应触发core而非break"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "我有烟瘾，想戒烟。试过很多次都失败了。",
+      "expected_behavior": "可能触发 fogg-habit-break，但需要先判断是否属于'自由落体型习惯'（需专业帮助）还是可自行处理的'下山型习惯'。如果是成瘾问题，应建议寻求专业帮助而非纯行为设计",
+      "notes": "边界：成瘾 vs 坏习惯的区分。书中明确区分上山型/下山型/自由落体型，自由落体型需专家帮助"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "break的测试重点：是否先拆具体行为、是否按反向B=MAP操作、是否优先用顶替而非硬戒"
+}

@@ -1,0 +1,52 @@
+{
+  "skill": "fogg-habit",
+  "version": "0.1.0",
+  "source_book": "《福格行为模型》BJ Fogg",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "我最近总是坚持不了健身计划，每次坚持两周就断了，怎么办？",
+      "expected_behavior": "调用 fogg-habit，识别为诊断意图，路由到 fogg-habit-core",
+      "notes": "正面场景：用户带具体习惯问题，主入口应识别为诊断并路由到core"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "我每天睡前忍不住刷手机到很晚，怎么戒掉？",
+      "expected_behavior": "调用 fogg-habit，识别为戒除意图，路由到 fogg-habit-break",
+      "notes": "正面场景：用户想戒除坏习惯，主入口应路由到break"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "我觉得自己好像变了，坚持跑步三个月后，感觉不跑步反而不舒服。这是什么现象？",
+      "expected_behavior": "调用 fogg-habit，识别为身份认同相关，路由到 fogg-habit-grow",
+      "notes": "正面场景：用户表露出身份转变信号，应路由到grow"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我写一个Python脚本来自动备份文件",
+      "expected_behavior": "不应调用任何 fogg-habit 技能",
+      "notes": "诱饵：纯技术任务，与习惯无关"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "今天天气怎么样？",
+      "expected_behavior": "不应调用任何 fogg-habit 技能",
+      "notes": "诱饵：日常闲聊，非习惯相关"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "我最近工作很忙，压力大，是不是该培养点新习惯？",
+      "expected_behavior": "可能触发 fogg-habit，但因为意图模糊（是诊断旧习惯还是设计新习惯？），主入口应先提问澄清而非直接路由",
+      "notes": "边界：意图模糊，应优先澄清再路由"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "主入口的测试重点在路由准确性：能否正确识别意图并路由到正确的子skill"
+}

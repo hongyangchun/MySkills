@@ -1,0 +1,52 @@
+{
+  "skill": "fogg-habit-core",
+  "version": "0.1.0",
+  "source_book": "《福格行为模型》BJ Fogg",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "我想养成每天阅读的习惯，但每次坚持一两周就断了，帮我分析一下问题出在哪？",
+      "expected_behavior": "调用 fogg-habit-core，进入阶段一诊断：先还原现场→查提示→查能力→查动机",
+      "notes": "正面场景：用户想诊断习惯断裂原因，应进入诊断流程"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "我想开始运动，但总觉得没时间没精力，帮我设计一个容易坚持的方案？",
+      "expected_behavior": "调用 fogg-habit-core，进入阶段二重设计：明确愿望→行为群→焦点地图→微行为→锚点配方",
+      "notes": "正面场景：用户想从头设计新习惯，应进入完整设计流水线"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "我之前坚持的冥想习惯最近断了，不知道为什么，能帮我排查一下吗？",
+      "expected_behavior": "调用 fogg-habit-core，进入诊断流程，按B=MAP反向排查（先提示再能力最后动机）",
+      "notes": "正面场景：原有习惯中断，需要诊断排错"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我写一份项目计划书",
+      "expected_behavior": "不应调用 fogg-habit-core",
+      "notes": "诱饵：工作管理任务，非习惯相关"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "我每天都忍不住喝三杯奶茶，怎么戒？",
+      "expected_behavior": "不应调用 fogg-habit-core（应路由到 fogg-habit-break）",
+      "notes": "诱饵：戒除坏习惯场景，应触发break而非core"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "我又熬夜了，但这次是因为加班赶项目。我同时想戒掉熬夜和养成早起习惯，该先处理哪个？",
+      "expected_behavior": "可能触发 fogg-habit-core，但涉及多习惯并行场景，应建议一次只聚焦一个，可先诊断哪个最影响生活质量",
+      "notes": "边界：多习惯并行。按照书中建议，应从无情绪负担的习惯开始，可导向先建早起还是先戒熬夜的决策"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "core的测试重点：诊断流程是否按B=MAP顺序（先提示→能力→动机），设计流程是否覆盖完整流水线"
+}

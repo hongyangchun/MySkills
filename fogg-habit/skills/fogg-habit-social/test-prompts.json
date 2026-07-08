@@ -1,0 +1,52 @@
+{
+  "skill": "fogg-habit-social",
+  "version": "0.1.0",
+  "source_book": "《福格行为模型》BJ Fogg 第8章",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "我们团队每天的站会总是超时，从计划的15分钟拖到快1小时。怎么让团队养成准时结束站会的习惯？",
+      "expected_behavior": "调用 fogg-habit-social，走 7 步流程：明确愿望→行为集群→群体焦点地图→让行为容易做→找提示→庆祝→排除障碍",
+      "notes": "正面场景：团队会议习惯改变，典型的群体行为设计场景"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "我想帮我们整个部门养成定期分享知识的习惯，但大家积极性不高。作为部门主管，我应该怎么推动？",
+      "expected_behavior": "调用 fogg-habit-social，识别为头目模式：先示范→让改变被看见→走7步流程→用群体焦点地图建立共识",
+      "notes": "正面场景：用户有正式权威（主管），属于头目角色"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "我们家的三位老人都不爱喝水，总说忘了。我想帮全家人养成喝水的习惯，但又不想让他们觉得我在管他们。",
+      "expected_behavior": "调用 fogg-habit-social，识别为忍者模式：不直接说'行为设计'，而是调整环境（水杯放在手边）→找已有锚点→设计群体提示",
+      "notes": "正面场景：家庭场景，用户没有正式权威，适合忍者模式"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "我自己想养成每天冥想的习惯，该怎么开始？",
+      "expected_behavior": "不应调用 fogg-habit-social（应路由到 fogg-habit-core）",
+      "notes": "诱饵：纯个人习惯设计，非群体场景"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "帮我写一份公司年度总结报告",
+      "expected_behavior": "不应调用 fogg-habit-social",
+      "notes": "诱饵：文档写作任务，非行为设计"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "我们公司最近做了架构调整，新流程推了两周就被大家绕回老路了。老板觉得是执行力问题，但我觉得是流程设计有毛病。我应该怎么跟老板沟通，用行为设计的方式重新推？",
+      "expected_behavior": "可能触发 fogg-habit-social，但用户需要先获得推动改变的授权。应建议：如果老板接受行为设计视角→走7步流程；如果老板只想'加强执行力'→不适合，行为设计的核心是设计环境不是要求执行",
+      "notes": "边界：组织改变牵涉权力结构。需要先判断用户是否有推动改变的授权和环境"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "social的测试重点：能否正确识别头目/忍者角色、群体焦点地图的四分区是否使用得当、群体vs个人场景的区分"
+}

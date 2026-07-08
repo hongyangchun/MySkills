@@ -1,0 +1,52 @@
+{
+  "skill": "fogg-habit-grow",
+  "version": "0.1.0",
+  "source_book": "《福格行为模型》BJ Fogg",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "我的跑步习惯已经坚持两个月了，每次跑完都会说'漂亮'，但感觉庆祝方式是不是太单调了，有没有更多庆祝的方法？",
+      "expected_behavior": "调用 fogg-habit-grow，进入庆祝模块：帮助用户扩展庆祝菜单，挑选更多庆祝方式",
+      "notes": "正面场景：用户已掌握基础庆祝，想深化庆祝设计"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "我想帮我的孩子养成每天收拾书包的习惯，但不想用唠叨的方式，有什么好方法？",
+      "expected_behavior": "调用 fogg-habit-grow，进入帮别人改变模块：三步法→针对孩子的差异策略→强调别当监工",
+      "notes": "正面场景：帮家人养成习惯，且用户表达了正确的意愿（不用唠叨方式）"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "坚持写作半年后，我开始觉得'我是一个写作者'，这种感觉很奇妙，帮我理一理这种变化。",
+      "expected_behavior": "调用 fogg-habit-grow，进入身份认同模块：识别用户处于生长期→内化期过渡，催化身份转变",
+      "notes": "正面场景：用户主动表达身份转变体验"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我写一个Python排序算法",
+      "expected_behavior": "不应调用 fogg-habit-grow",
+      "notes": "诱饵：纯编程任务，与习惯无关"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "我想从零开始培养一个每天冥想的习惯，该怎么设计？",
+      "expected_behavior": "不应调用 fogg-habit-grow（应路由到 fogg-habit-core 进行行为设计）",
+      "notes": "诱饵：从零设计新习惯，应触发core而非grow"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "我帮团队推了一个新流程，大家一开始挺配合的，但两周后就开始走回老路。怎么让团队真正坚持新习惯？",
+      "expected_behavior": "可能触发 fogg-habit-grow 的帮别人模块，但涉及群体行为设计场景超出个人帮个人的范围。应建议用户尝试群体行为设计思路（改流程/改默认项/减步骤），或提示有群体行为设计的方法论可用",
+      "notes": "边界：个人帮个人 vs 群体行为设计。当前grow的帮别人模块侧重一对一，群体场景可能需要fogg-habit-social"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "grow的测试重点：三模块的独立性和串联性，避免在应触发core的场景下错误触发grow"
+}
