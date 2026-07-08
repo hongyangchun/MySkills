@@ -1,6 +1,6 @@
 # fogg-habit 重构设计文档
 
-> 将当前 1 个 SKILL.md + 6 个 reference 文件的架构，重构为 1 主入口 + 3 子 skill，形成一致的模块化架构。
+> 将当前 1 个 SKILL.md + 6 个 reference 文件的架构，重构为 1 主入口 + 3 子 skill，与 systems-thinking 和 youjie 套件保持一致。
 
 ## 一、当前状态
 
@@ -89,6 +89,13 @@ fogg-habit/
 - B=MAP 速查保留
 - 模式路由表改为 3 路（原 6 路合并为 3 路）
 
+**与其他 skill 的关系**：
+
+| skill | 关系 | 说明 |
+|-------|------|------|
+| `youjie-solve` | 衔接 | 有解第七步"拟定行动"可接 fogg-habit 做微行为设计 |
+| `systems-thinking` | 互补 | 系统思维诊断"环境结构"，福格在给定环境下设计行为 |
+
 ### 3.2 `fogg-habit-core` — 基础：诊断 + 设计
 
 | 项目 | 内容 |
@@ -165,7 +172,7 @@ fogg-habit/
 | 主入口大小 | ~2KB | ~1KB（精简为纯路由） |
 | reference 文件 | 6个，内容完整 | 保留不动，作为子 skill 的详细备份 |
 | 符号链接 | 1个 | 4个 |
-| 架构一致性 | 独有 | 统一为 1+3 模块化架构 |
+| 架构一致性 | 独有 | 与 systems-thinking、youjie 统一（均为 1+3） |
 
 ## 五、权衡与风险
 
